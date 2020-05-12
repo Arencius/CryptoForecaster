@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-import mplcursors
 from forecaster import CryptoForecaster
 from api.currencies import currency_rate
 from datetime import datetime
@@ -22,6 +21,7 @@ class App:
         self.main()
 
     def main(self):
+        ''' Main function. Builds window and initializes all values '''
         global window, canvas
         window = tk.Tk()
         window.title('CryptoForecaster')
@@ -88,6 +88,7 @@ class App:
         figure.clear()   # updates canvas
         data, forecasted, title = np.array([]), [], ''
 
+        # variable holding rate of given currency in relation to one dollar
         rate = currency_rate(cur.upper())
 
         if key == 'btc':
