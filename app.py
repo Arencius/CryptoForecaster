@@ -26,17 +26,17 @@ class App:
         window = tk.Tk()
         window.title('CryptoForecaster')
         window.geometry('{0}x{1}+0+0'.format(window.winfo_screenwidth(),
-                                             window.winfo_screenheight()))
+                                             window.winfo_screenheight()))  # full-screen window size
         try:
             window.iconbitmap('images/btc.ico')
         except:
             print("Couldn't load an icon")
 
-        # frame for the buttons
+        # frame for cryptocurrencies buttons
         left_frame = tk.Frame(window, width=100)
         left_frame.pack(side=tk.LEFT)
 
-        # second frame
+        # frame for currencies buttons
         right_frame = tk.Frame(window, width=100)
         right_frame.pack(side=tk.RIGHT)
 
@@ -122,7 +122,7 @@ class App:
         ax.scatter(days, data, color='red', s=10)
         ax.plot(days, data)
 
-        self.append_plot(ax, forecasted)
+        self.append_plot(ax, forecasted)  # adds plot with forecasted values
 
         canvas.draw()
 

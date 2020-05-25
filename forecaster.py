@@ -16,8 +16,8 @@ MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
           'July', 'August', 'September', 'October', 'November', 'December']
 DATE = datetime.now()
 
-start = '{}{:02d}{:02d}'.format(DATE.year-1, DATE.month, DATE.day)
-end = '{}{:02d}{:02d}'.format(DATE.year, DATE.month, DATE.day)
+START = '{}{:02d}{:02d}'.format(DATE.year-1, DATE.month, DATE.day)
+END = '{}{:02d}{:02d}'.format(DATE.year, DATE.month, DATE.day)
 
 
 class CryptoForecaster:
@@ -39,7 +39,7 @@ class CryptoForecaster:
     @staticmethod
     def ethereum_data():
         ''' Gets ethereum values from last 365 days. '''
-        link = f'https://coinmarketcap.com/currencies/ethereum/historical-data?start={start}&end={end}'
+        link = f'https://coinmarketcap.com/currencies/ethereum/historical-data?start={START}&end={END}'
         eth = pd.read_html(link)[2]
 
         ethereum_values = eth['Close**']
@@ -48,7 +48,7 @@ class CryptoForecaster:
     @staticmethod
     def dash_data():
         ''' Gets dash values from last 365 days. '''
-        link = f'https://coinmarketcap.com/currencies/dash/historical-data?start={start}&end={end}'
+        link = f'https://coinmarketcap.com/currencies/dash/historical-data?start={START}&end={END}'
         dash = pd.read_html(link)[2]
 
         dash_values = dash['Close**']
@@ -60,6 +60,6 @@ class CryptoForecaster:
         return MONTHS[m-1:] + MONTHS[:m+3]
 
     def predict(self, data):
-        ''' Forecasts cryptocurrency value for the next 90 days. '''
-        model = ARIMA(data, order=(3, 1, 1)).fit()
+        ''' Forecasts cryptocurrency value for the next 90 days (based on values from last 4 months). '''
+        model = ARIMA(data[len(data)-120:], order=(3, 1, 1)).fit()
         return model.forecast(steps=90)[0]
